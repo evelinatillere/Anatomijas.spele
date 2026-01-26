@@ -39,10 +39,10 @@ let z = x + y;
 
 //sending info to python...hopefully
 const data = {
-  vards: "Alise",
-  lietotajvards: "Alise_pukite",
-  parole: "kakisi",
-  e_pasts: "Alise_pukite@inbox.lv"
+  vards: "Elza",
+  lietotajvards: "Elza.B",
+  parole: "123e",
+  e_pasts: "Elza.B@gmail.com"
 };
 
 print(data)
