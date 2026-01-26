@@ -27,6 +27,7 @@ Papildus tiks izmantotas arī bibliotēkas anatomisko attēlu pārvaldībai, kā
 
 ### Darba plāns 
 | nedēlas nr. | Evelīna | Līva | Megija|
+| ------------- | ------------- | ------------- | ------------- |
 | 1. | Atrast/izveidot cilvēka kaulu, muskuļu un orgānu modeļus | Sagatavot konceptuālo modeli. Sagatavot izstrādes vidi. Sagatavot bibliotēku saistības (dependencies). | Megija|
 | 2. | Izveidot sarasktu/uzskatāmu materiālu ar iekļaujamajiem kauliem + 1/2 muskuļiem | Izveidot python failu un datubāžu sistēmu backend. Izveidot javascript failu un HTML failu frontend  | Megija|
 | 3. | Izveidot sarasktu/uzskatāmu materiālu ar iekļaujamajiem 1/2 muskuļiem + orgāniem|   Izveidot backend savienojumu ar serveri. Izmēģināt API saziņu ar serveri un pārbaudīt, vai no frontend var nosūtīt informāciju uz datubāzi  | Megija|
