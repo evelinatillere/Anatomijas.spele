@@ -13,6 +13,7 @@ Papildus formālajai izglītībai, risinājums būs piemērots arī ikvienam int
 
 
 **Kāpēc vērts risinājumu izstrādāt?**
+
 Šādu risinājumu ir vērts izstrādāt, jo šobrīd trūkst kvalitatīvu un mūsdienīgu anatomijas mācību resursu latviešu valodā. Lielākā daļa pieejamo materiālu ir svešvalodās, kas apgrūtina mācību procesu un samazina efektivitāti. Mācoties dzimtajā valodā, lietotāji var koncentrēties uz satura izpratni, nevis terminu tulkošanu.
 Šajā risinājumā tiek izmantots active recall jeb aktīvās atcerēšanās princips, kas ir viens no efektīvākajiem veidiem, kā apgūt un ilgtermiņā saglabāt zināšanas. Atšķirībā no pasīvās mācīšanās, piemēram, vienkāršas grāmatas vai attēlu skatīšanās, active recall liek cilvēkam aktīvi domāt, meklēt atbildi un pieņemt lēmumu. Kad lietotājs redz anatomisko nosaukumu un pats mēģina atrast pareizo vietu cilvēka attēlā, smadzenes strādā intensīvāk, tādējādi informācija tiek labāk nostiprināta. Šāda mācīšanās veicina dziļāku izpratni un samazina virspusēju iekalšanu.
 Interaktīva pieeja ar vizuāliem attēliem un spēles elementiem veicina lielāku iesaisti un motivāciju mācīties. Šāda mājaslapa palīdz nostiprināt zināšanas, uzlabot atmiņu un padarīt mācīšanos interesantāku un efektīvāku. Turklāt iespēja sekot līdzi savam progresam motivē lietotājus atkārtoti atgriezties platformā un pilnveidot savas zināšanas ilgtermiņā.
@@ -37,4 +38,4 @@ Papildus tiks izmantotas arī bibliotēkas anatomisko attēlu pārvaldībai, kā
 | 7. | Novietot nospiežamās pogas uz cilvēka muskuļu, kaulu modeļiem. |  Izveidot algoritmu jautājuma ģenerēšanai un nodrošināt jautājuma sūtīšanu uz frontend | Megija|
 | 8. | Novietot nospiežamās pogas uz cilvēka orgānu modeļa. | Iveidot kodu ievadītās atbildes saņemšanai backend. Izveidot ievadītās atbildes pareizības pārbaudi un boolean pazeiz vai nepareizs vērtības nosūtīšanu uz frontend | Megija|
 | 9. | Mājas lapas dizains - pogas, nodaļas, krāsas -, lai viss labi izskatās. | Nodrošināt rezultātu saņemšanu backend un ievietošanu datubāzē  | Megija|
-| 10. | Programmas loģistikas, log in testēšana | Programmas frontend testēšana | Lietotāja saskarnes testēšana|
+| 10. | Programmas loģistikas, log in testēšana | Programmas frontend testēšana | Lietotāja saskarnes (spēles) testēšana|
