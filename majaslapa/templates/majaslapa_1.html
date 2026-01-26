@@ -1,0 +1,135 @@
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>This is a Heading</h1>
+
+<style>
+.city {
+  background-color: tomato;
+  color: white;
+  border: 2px solid black;
+  margin: 20px;
+  padding: 20px;
+}
+</style>
+
+<div class="city">
+  <h2>London</h2>
+  <p>London is the capital of England.</p>
+</div>
+
+<div class="city">
+  <h2>Paris</h2>
+  <p>Paris is the capital of France.</p>
+</div>
+
+<button onclick="alert('Hello!')">Click Me</button>
+
+
+<p>JavaScript can change the content of an HTML element:</p>
+
+<button type="button" onclick="myFunction1()">Click Me!</button>
+
+<p id="one">This is a demonstration.</p>
+
+<button type="button" onclick="myFunction2()" id="two">Click this button</button>
+<button type="button" onclick="myFunction3()"id="three">Click this button too</button>
+
+
+<button type="button" onclick = "window.alert(x+y)">alert</button>
+
+<button type="button" onclick = "window.alert(a)"> is this true?</button>
+<button type="button" onclick = "boolean()"> Click this to turn true</button>
+<button type="button" onclick = "boolean_false()"> Click this to turn false</button>
+
+
+
+<script src="static/majaslapa_1.js"></script>
+
+<form>
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname">
+  <input type="submit" value="Submit" >
+</form>
+
+<form id="frm1" onsubmit="myFunction_4(); return false;">
+  First name: <input type="text" name="fname" value="Donald"><br>
+  Last name: <input type="text" name="lname" value="Duck"><br>
+  <input type="submit" value="Submit">
+</form> 
+
+<p>Click "Try it" to display the value of each element in the form.</p>
+
+<button type="button" onclick="myFunction_4()">Try it</button>
+
+<p id="demo"></p>
+
+<style>
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+.container .btn {
+  position: absolute;
+  top: 15%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
+  color: black;
+  font-size: 10px;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.container .btn:hover {
+  background-color: black;
+  color: white;
+}
+
+</style>
+<div class="container">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXrTMQaVDF04c4OrjHendAK2GD79XsJ19GRw&s" alt="Snow" width="600" height="400">
+  <button class="btn" onclick = "myFunction3()" id = "three_1"= >Button</button>
+  <button class="btn_1" onclick = "myFunction3()" id = "three_1"= >Button</button>
+</div>
+<input type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOVf0ZPy9Gkh8ejcZ4f5IttX6rsO83TE6wg&sf" onclick = "window.alert('heart')"width="48" height="48">
+<style>
+.container .btn_1 {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
+  color: black;
+  font-size: 10px;
+  padding: 1px 1px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.container .btn_1:hover {
+  background-color: red;
+  color: white;
+}
+
+</style>
+
+</body>
+</html>
