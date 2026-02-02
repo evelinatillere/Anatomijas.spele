@@ -1,4 +1,4 @@
-# Anatomisjas.spele
+# Anatomijas spēle
 ###	Idejas apraksts
 Šī projekta ideja ir izveidot izglītojošu mājaslapu, kas sniedz iespēju latviešu valodā apgūt cilvēka anatomiju – kaulus, muskuļus un iekšējos orgānus. Pašlaik gandrīz visas pieejamās anatomijas mācību aplikācijas un mājaslapas ir svešvalodās, visbiežāk angļu valodā. Tas rada grūtības skolēniem un studentiem, jo mācību procesā ir jātērē laiks terminu tulkošanai, nevis pašas tēmas izpratnei. Mācoties dzimtajā valodā, informācija tiek uztverta vieglāk, ātrāk un arī labāk paliek atmiņā, īpaši, ja pārbaudes darbi un eksāmeni notiek latviešu valodā.
 Ienākot mājaslapā, lietotājam būs iespēja izvēlēties, kuru anatomijas sadaļu viņš vēlas apgūt – cilvēka kaulus, muskuļus vai orgānus. Pēc izvēles veikšanas ekrānā parādīsies vizuāls cilvēka attēls ar attiecīgo anatomisko sistēmu, piemēram, skelets, muskuļu karte vai iekšējo orgānu izvietojums. Šajā posmā lietotājs varēs brīvi apskatīt attēlu un iepazīties ar pareizajiem nosaukumiem un to novietojumu, tādējādi nostiprinot pamatzināšanas.
