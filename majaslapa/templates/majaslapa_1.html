@@ -42,9 +42,8 @@
 <button type="button" onclick = "window.alert(x+y)">alert</button>
 
 <button type="button" onclick = "window.alert(a)"> is this true?</button>
-<button type="button" onclick = "boolean()"> Click this to turn true</button>
-<button type="button" onclick = "boolean_false()"> Click this to turn false</button>
-
+<button onclick="setTrue()">Click this to turn true</button>
+<button onclick="setFalse()">Click this to turn false</button>
 
 
 <script src="static/majaslapa_1.js"></script>
@@ -68,6 +67,14 @@
 <button type="button" onclick="myFunction_4()">Try it</button>
 
 <p id="demo"></p>
+
+<form id="form">
+    <input id="vards" placeholder="Vārds">
+    <input id="lietotajvards" placeholder="Lietotājvārds">
+    <input id="parole" type="password" placeholder="Parole">
+    <input id="e_pasts" placeholder="E-pasts">
+    <button>Register</button>
+  </form>
 
 <style>
 .container {
@@ -104,8 +111,8 @@
 </style>
 <div class="container">
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXrTMQaVDF04c4OrjHendAK2GD79XsJ19GRw&s" alt="Snow" width="600" height="400">
-  <button class="btn" onclick = "myFunction3()" id = "three_1"= >Button</button>
-  <button class="btn_1" onclick = "myFunction3()" id = "three_1"= >Button</button>
+  <button class="btn" onclick="myFunction3()" id="three_1">Button</button>
+<button class="btn_1" onclick="myFunction3()" id="three_2">Button</button>
 </div>
 <input type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOVf0ZPy9Gkh8ejcZ4f5IttX6rsO83TE6wg&sf" onclick = "window.alert('heart')"width="48" height="48">
 <style>

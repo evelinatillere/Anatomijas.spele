@@ -8,15 +8,16 @@ function myFunction2() {
 }
 function myFunction3() {
   document.getElementById("three").innerHTML = "Paragraph changed.";
-  document.getElementById("three_1").innerHTML = "Paragraph changed.";
+  document.getElementById("three_1").innerHTML = "Changed.";
+  document.getElementById("three_2").innerHTML = "Changed.";
 }
 
 let a = false;
 
-function boolean(){
-    a = true;
+function setTrue() {
+  a = true;
 }
-function boolean_false(){
+function setFalse() {
   a = false;
 }
 if (a === true) {
@@ -38,23 +39,33 @@ let y = 6;
 let z = x + y;
 
 //sending info to python...hopefully
-const data = {
-  vards: "Elza",
-  lietotajvards: "Elza.B",
-  parole: "123e",
-  e_pasts: "Elza.B@gmail.com"
-};
+//const data = {
+  //vards: "Laura",
+  //lietotajvards: "Laurina",
+  //parole: "123a",
+  //e_pasts: "Laura_Ozola@gmail.com"};
 
-print(data)
+document.getElementById("form").onsubmit = async (e) => {
+  e.preventDefault();
 
-fetch("http://127.0.0.1:5000/data", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(data)
-})
-.then(res => res.json())
-.then(result => {
-  console.log("Server response:", result);
-});
+  const vards = document.getElementById("vards").value;
+  const lietotajvards = document.getElementById("lietotajvards").value;
+  const parole = document.getElementById("parole").value;
+  const e_pasts = document.getElementById("e_pasts").value;
+
+  const response = await fetch("/register", {method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      vards,
+      lietotajvards,
+      parole,
+      e_pasts
+    })});
+  const result = await response.json();
+
+if (response.ok) {
+  alert("Registration successful!");
+} else {
+  alert(result.error);
+}
+}
