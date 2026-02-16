@@ -48,18 +48,18 @@ let z = x + y;
 document.getElementById("form").onsubmit = async (e) => {
   e.preventDefault();
 
-  const vards = document.getElementById("vards").value;
-  const lietotajvards = document.getElementById("lietotajvards").value;
-  const parole = document.getElementById("parole").value;
-  const e_pasts = document.getElementById("e_pasts").value;
+  const vards = document.getElementById("vards");
+  const lietotajvards = document.getElementById("lietotajvards");
+  const parole = document.getElementById("parole");
+  const e_pasts = document.getElementById("e_pasts");
 
   const response = await fetch("/register", {method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      vards,
-      lietotajvards,
-      parole,
-      e_pasts
+      vards: vards.value,
+      lietotajvards: lietotajvards.value,
+      parole: parole.value,
+      e_pasts: e_pasts.value
     })});
   const result = await response.json();
 
@@ -69,3 +69,5 @@ if (response.ok) {
   alert(result.error);
 }
 }
+
+console.log("Submitting form");

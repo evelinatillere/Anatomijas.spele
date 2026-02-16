@@ -59,10 +59,11 @@ app = Flask(__name__)
 
 # ---- DATABASE CONFIG ----
 DB_CONFIG = {
-    "host": os.getenv("DB_HOST"),
-    "user": os.getenv("DB_USER"),
-    "password": os.getenv("DB_PASSWORD"),
-    "database": os.getenv("DB_NAME")
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "Gramatalaba01020304.",
+    "database": "majaslapa_1"
 }
 
 # ---- ROUTES ----
@@ -70,12 +71,16 @@ DB_CONFIG = {
 @app.route("/", methods=["GET"])
 def home():
     return render_template("majaslapa_1.html")
-
-
-@app.route("/register", methods=["POST"])
+@app.route( "/register", methods=["POST"])
 def register():
-    data = request.get_json()
+    print("HEADERS:", request.headers)
+    print("RAW:", request.data)
+    print("JSON:", request.get_json())
+    print("DB CONFIG:", DB_CONFIG)
 
+
+    data = request.get_json()
+    
     if not data:
         return jsonify({"error": "Invalid JSON"}), 400
 
