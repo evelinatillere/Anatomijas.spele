@@ -73,11 +73,6 @@ def home():
     return render_template("majaslapa_1.html")
 @app.route( "/register", methods=["POST"])
 def register():
-    print("HEADERS:", request.headers)
-    print("RAW:", request.data)
-    print("JSON:", request.get_json())
-    print("DB CONFIG:", DB_CONFIG)
-
 
     data = request.get_json()
     
