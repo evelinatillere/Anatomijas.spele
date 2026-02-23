@@ -38,14 +38,7 @@ let x = 5;
 let y = 6;
 let z = x + y;
 
-//sending info to python...hopefully
-//const data = {
-  //vards: "Laura",
-  //lietotajvards: "Laurina",
-  //parole: "123a",
-  //e_pasts: "Laura_Ozola@gmail.com"};
-
-document.getElementById("form").onsubmit = async (e) => {
+document.getElementById("registresanas").onsubmit = async (e) => {
   e.preventDefault();
 
   const vards = document.getElementById("vards");
@@ -71,3 +64,26 @@ if (response.ok) {
 }
 
 console.log("Submitting form");
+
+
+document.getElementById("log_in").onsubmit = async (e) => {
+  e.preventDefault();
+  const lietotajvards_log = document.getElementById("lietotajvards_log");
+  const parole_log = document.getElementById("parole_log");
+
+  
+  const response = await fetch("/log_in", {method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      lietotajvards: lietotajvards_log.value,
+      parole: parole_log.value,
+    })});
+  const result = await response.json();
+
+  if (response.ok) {
+    alert("Registration successful!");
+  } else {
+    alert(result.error);
+  }
+}
+  console.log("Submitting form");
