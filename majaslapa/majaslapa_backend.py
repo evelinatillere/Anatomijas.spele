@@ -55,8 +55,13 @@ from werkzeug.security import generate_password_hash
 import mysql.connector
 import os
 from werkzeug.security import check_password_hash
+from flask import session
 
 app = Flask(__name__)
+
+app.secret_key = "your_secret_key"
+
+esi_loged_in = False
 
 # ---- DATABASE CONFIG ----
 DB_CONFIG = {
@@ -128,7 +133,7 @@ def log_in():
     if not data_log:
         return jsonify({"error": "Invalid JSON"}), 400
 
-    required = ["lietotajvards_log", "parole_log"]
+    required = ["lietotajvards", "parole"]
     if not all(field in data_log for field in required):
         return jsonify({"error": "Missing fields"}), 400
     
@@ -140,26 +145,34 @@ def log_in():
         cursor = db.cursor()
 
         values_log = (
-            data_log["lietotajvards_log"],
-            generate_password_hash(data_log["parole_log"]),
+            data_log["lietotajvards"],
+            data_log["parole"],
         )
 
         cursor.execute(
             "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
-            (data_log["lietotajvards_log"],)
+            (data_log["lietotajvards"],)
         )
         myresult = cursor.fetchone()
 
-        if not myresult or not check_password_hash(myresult[0], data_log["parole_log"]):
+        if not myresult or not check_password_hash(myresult[0], data_log["parole"]):
             return jsonify({"error": "Invalid credentials"}), 401
         
+        #if myresult[0] == check_password_hash(data_log["parole"]):
+            #global esi_loged_in
+            #esi_loged_in = True
+
+         # If login is successful
+        global esi_loged_in
+        username = data_log["lietotajvards"]
+        session["logged_in"] = True
+        session["username"] = username
+
 
         for x in myresult:
             print(x)
         print(myresult)
 
-    except mysql.connector.IntegrityError:
-        return jsonify({"error": "User already exists"}), 409
     except mysql.connector.Error as e:
         return jsonify({"error": str(e)}), 500
     finally:
@@ -168,14 +181,13 @@ def log_in():
         if db:
             db.close()
 
-    return jsonify({"status": "ok"}), 201
+    return jsonify({"status": "ok"}), 200
 
-# ---- ENTRY POINT ----
+@app.route("/are_u_loged_in", methods=["GET"])
+def are_u_loged_in():
+    if session.get("logged_in"):
+        return jsonify({"status": "ok", "username": session.get("username")}), 200
+    return jsonify({"status": "not_logged_in"}), 401
+
 if __name__ == "__main__":
-    app.run(
-        host="0.0.0.0",  
-        port=5000,
-        debug=False      
-    )
-
     app.run(host="0.0.0.0", port=5000, debug=True)

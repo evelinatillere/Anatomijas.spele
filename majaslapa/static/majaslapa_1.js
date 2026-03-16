@@ -81,9 +81,20 @@ document.getElementById("log_in").onsubmit = async (e) => {
   const result = await response.json();
 
   if (response.ok) {
-    alert("Registration successful!");
+    alert(lietotajvards_log.value + " login successful!");
   } else {
     alert(result.error);
   }
 }
   console.log("Submitting form");
+
+
+  async function checkLogin() {
+  const response = await fetch("/are_u_loged_in", { method: "GET" });
+  const result = await response.json();
+  if (response.ok) {
+    alert(result.username + " is logged in");
+  } else {
+    alert("Not logged in");
+  }
+}
