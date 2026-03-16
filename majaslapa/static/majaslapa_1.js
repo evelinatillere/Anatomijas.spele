@@ -135,3 +135,25 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     alert("An error occurred");
   }
 });
+
+document.getElementById("change_password").onsubmit = async (e) => {
+  e.preventDefault();
+  const old_password = document.getElementById("parole_old");
+  const new_password = document.getElementById("parole_new");
+
+  
+  const response = await fetch("/change_password", {method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      old_pasword: old_password.value,
+      new_password: new_password.value,
+    })});
+  const result = await response.json();
+
+  if (response.ok) {
+    alert(lietotajvards_log.value + " login successful!");
+  } else {
+    alert(result.error);
+  }
+}
+  console.log("Submitting form");
