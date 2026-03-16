@@ -83,7 +83,7 @@
     <input id="parole_log" type="password" placeholder="Parole">
     <button type="submit">Log in</button>
   </form>
-
+  <button id="logoutBtn">Log out</button>
 
 <style>
 .container {
@@ -123,7 +123,9 @@
   <button class="btn" onclick="myFunction3()" id="three_1">Button</button>
 <button class="btn_1" onclick="myFunction3()" id="three_2">Button</button>
 </div>
-<input type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOVf0ZPy9Gkh8ejcZ4f5IttX6rsO83TE6wg&sf" onclick = "window.alert('heart')"width="48" height="48">
+<input type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOVf0ZPy9Gkh8ejcZ4f5IttX6rsO83TE6wg&sf" 
+       onclick="checkHeart()" width="48" height="48" id="5">
+<p id="heartStatus"></p>
 <style>
 .container .btn_1 {
   position: absolute;

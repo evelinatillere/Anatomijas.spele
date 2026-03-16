@@ -88,13 +88,50 @@ document.getElementById("log_in").onsubmit = async (e) => {
 }
   console.log("Submitting form");
 
+async function checkHeart() {
 
-  async function checkLogin() {
-  const response = await fetch("/are_u_loged_in", { method: "GET" });
-  const result = await response.json();
-  if (response.ok) {
-    alert(result.username + " is logged in");
-  } else {
-    alert("Not logged in");
+  try {
+    const response = await fetch("/are_u_loged_in", {
+      method: "GET"
+    });
+
+    if (!response.ok) {
+      // User not logged in
+      alert ("You need to log in to see the heart ❤️");
+      return;
+    }
+
+    const result = await response.json();
+
+    if (result.ok) {
+      // Logged in → show the heart alert
+      alert("❤️");
+    } else {
+      alert ("You need to log in to see the heart ❤️");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert( "Error checking login");
   }
 }
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  try {
+    const response = await fetch("/log_out", {
+      method: "POST"
+    });
+
+    const result = await response.json();
+
+    if (result.ok) {
+      alert("Logged out successfully!");
+    } else {
+      alert("Logout failed");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("An error occurred");
+  }
+});

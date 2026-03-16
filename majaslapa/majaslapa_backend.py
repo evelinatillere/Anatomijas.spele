@@ -125,30 +125,22 @@ def register():
 
     return jsonify({"status": "ok"}), 201
 
-@app.route( "/log_in", methods=["POST"])
+@app.route("/log_in", methods=["POST"])
 def log_in():
-
     data_log = request.get_json()
-    
     if not data_log:
         return jsonify({"error": "Invalid JSON"}), 400
 
     required = ["lietotajvards", "parole"]
     if not all(field in data_log for field in required):
         return jsonify({"error": "Missing fields"}), 400
-    
+
     db = None
     cursor = None
 
     try:
         db = mysql.connector.connect(**DB_CONFIG)
         cursor = db.cursor()
-
-        values_log = (
-            data_log["lietotajvards"],
-            data_log["parole"],
-        )
-
         cursor.execute(
             "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
             (data_log["lietotajvards"],)
@@ -157,37 +149,32 @@ def log_in():
 
         if not myresult or not check_password_hash(myresult[0], data_log["parole"]):
             return jsonify({"error": "Invalid credentials"}), 401
-        
-        #if myresult[0] == check_password_hash(data_log["parole"]):
-            #global esi_loged_in
-            #esi_loged_in = True
 
-         # If login is successful
-        global esi_loged_in
-        username = data_log["lietotajvards"]
-        session["logged_in"] = True
-        session["username"] = username
-
-
-        for x in myresult:
-            print(x)
-        print(myresult)
+        # Login successful → save in session
+        session["user"] = data_log["lietotajvards"]
+        return jsonify(ok=True)
 
     except mysql.connector.Error as e:
         return jsonify({"error": str(e)}), 500
+
     finally:
         if cursor:
             cursor.close()
         if db:
             db.close()
 
-    return jsonify({"status": "ok"}), 200
+@app.route("/log_out", methods=["POST"])
+def log_out():
+    session.pop("user", None) 
+    return jsonify(ok=True)    
 
 @app.route("/are_u_loged_in", methods=["GET"])
 def are_u_loged_in():
-    if session.get("logged_in"):
-        return jsonify({"status": "ok", "username": session.get("username")}), 200
-    return jsonify({"status": "not_logged_in"}), 401
+    if "user" in session:
+        return jsonify(ok=True, username=session["user"])
+    else:
+        return jsonify(ok=False, error="Not logged in"), 401
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
