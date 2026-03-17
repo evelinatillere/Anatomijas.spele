@@ -174,6 +174,63 @@ def are_u_loged_in():
         return jsonify(ok=True, username=session["user"])
     else:
         return jsonify(ok=False, error="Not logged in"), 401
+    
+@app.route("/change_password", methods=["POST"])
+def change_password():
+    if "user" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"error": "Invalid JSON"}), 400
+
+    old_password = data.get("old_password")
+    new_password = data.get("new_password")
+
+    if not old_password or not new_password:
+        return jsonify({"error": "Missing fields"}), 400
+
+    db = None
+    cursor = None
+
+    try:
+        db = mysql.connector.connect(**DB_CONFIG)
+        cursor = db.cursor()
+
+        # 1. Get current password
+        cursor.execute(
+            "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
+            (session["user"],)
+        )
+        result = cursor.fetchone()
+
+        if not result:
+            return jsonify({"error": "User not found"}), 404
+
+        # 2. Check old password
+        if not check_password_hash(result[0], old_password):
+            return jsonify({"error": "Wrong old password"}), 401
+
+        # 3. Update password
+        new_hash = generate_password_hash(new_password)
+
+        cursor.execute(
+            "UPDATE lietotaji SET parole = %s WHERE lietotajvards = %s",
+            (new_hash, session["user"])
+        )
+        db.commit()
+
+        return jsonify({"ok": True})
+
+    except mysql.connector.Error as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
 
 
 if __name__ == "__main__":

@@ -145,15 +145,17 @@ document.getElementById("change_password").onsubmit = async (e) => {
   const response = await fetch("/change_password", {method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      old_pasword: old_password.value,
+      old_password: old_password.value,
       new_password: new_password.value,
     })});
   const result = await response.json();
 
   if (response.ok) {
-    alert(lietotajvards_log.value + " login successful!");
+    alert("password change successful!");
   } else {
     alert(result.error);
   }
 }
   console.log("Submitting form");
+
+
