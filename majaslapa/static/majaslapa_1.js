@@ -158,4 +158,19 @@ document.getElementById("change_password").onsubmit = async (e) => {
 }
   console.log("Submitting form");
 
+document.getElementById("rezultats_form").onsubmit = async (e) => {
+  e.preventDefault();
+  const rezultats = document.getElementById("rezultats");
 
+  const response = await fetch("/send_result", {method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      rezultats: rezultats.value
+    })});
+  const results = await response.json();
+
+  if (response.ok) {
+    alert("rezultats ir ievadits!");
+  } else {
+    alert(results.error);
+  }}

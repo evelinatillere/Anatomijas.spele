@@ -198,7 +198,6 @@ def change_password():
         db = mysql.connector.connect(**DB_CONFIG)
         cursor = db.cursor()
 
-        # 1. Get current password
         cursor.execute(
             "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
             (session["user"],)
@@ -232,6 +231,38 @@ def change_password():
         if db:
             db.close()
 
+@app.route("/send_result", methods=["POST"])
+def send_result():
+    if "user" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+
+    data = request.get_json()
+
+    if not data or "rezultats" not in data:
+        return jsonify({"error": "Missing result"}), 400
+
+    try:
+        db = mysql.connector.connect(**DB_CONFIG)
+        cursor = db.cursor()
+
+        sql = """
+            INSERT INTO rezultati (lietotajvards, rezultats)
+            VALUES (%s, %s)
+        """
+
+        cursor.execute(sql, (session["user"], data["rezultats"]))
+        db.commit()
+
+        return jsonify({"ok": True})
+
+    except mysql.connector.Error as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        if cursor:
+            cursor.close()
+        if db:
+            db.close()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
