@@ -174,3 +174,30 @@ document.getElementById("rezultats_form").onsubmit = async (e) => {
   } else {
     alert(results.error);
   }}
+
+  async function paradit_rez() {
+
+  try {
+    const response = await fetch("/paradit_rez", {
+      method: "GET"
+    });
+
+    if (!response.ok) {
+      // User not logged in
+      alert ("Jūs neesat pieslēdzies");
+      return;
+    }
+
+    const result = await response.json();
+
+    if (result.ok) {
+      alert("❤️");
+    } else {
+      alert ("Jūs neesat pieslēdzies.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert( "Error checking login");
+  }
+}

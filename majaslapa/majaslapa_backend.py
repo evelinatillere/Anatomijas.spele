@@ -264,5 +264,12 @@ def send_result():
         if db:
             db.close()
 
+@app.route("/paradit_rez", methods=["GET"])
+def are_u_loged_in():
+    if "user" in session:
+        return jsonify(ok=True, username=session["user"])
+    else:
+        return jsonify(ok=False, error="Not logged in"), 401
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
