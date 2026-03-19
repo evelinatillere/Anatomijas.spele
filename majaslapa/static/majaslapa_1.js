@@ -58,6 +58,10 @@ document.getElementById("registresanas").onsubmit = async (e) => {
 
 if (response.ok) {
   alert("Registration successful!");
+  vards.value = "";
+  lietotajvards.value = "";
+  parole.value = "";
+  e_pasts.value = "";
 } else {
   alert(result.error);
 }
@@ -82,6 +86,8 @@ document.getElementById("log_in").onsubmit = async (e) => {
 
   if (response.ok) {
     alert(lietotajvards_log.value + " login successful!");
+    lietotajvards_log.value = "";
+    parole_log.value = "";
   } else {
     alert(result.error);
   }
@@ -152,6 +158,8 @@ document.getElementById("change_password").onsubmit = async (e) => {
 
   if (response.ok) {
     alert("password change successful!");
+    old_password.value = "";
+    new_password.value = "";
   } else {
     alert(result.error);
   }
@@ -175,7 +183,12 @@ document.getElementById("rezultats_form").onsubmit = async (e) => {
     alert(results.error);
   }}
 
-  async function paradit_rez() {
+const paraditBtn = document.getElementById("paradit_rez");
+
+if (paraditBtn) {
+  paraditBtn.addEventListener("click", paradit_rez);
+}
+async function paradit_rez() {
 
   try {
     const response = await fetch("/paradit_rez", {
@@ -191,7 +204,15 @@ document.getElementById("rezultats_form").onsubmit = async (e) => {
     const result = await response.json();
 
     if (result.ok) {
-      alert("❤️");
+      alert("Your results: " + JSON.stringify(result.rezultati));
+      let data = result.rezultati;
+      let text = "";
+
+      for (let i = 0; i < data.length; i++) {
+        text += data[i][0] + "% <br>";
+      }
+
+document.getElementById("paradit_button").innerHTML = text;
     } else {
       alert ("Jūs neesat pieslēdzies.");
     }

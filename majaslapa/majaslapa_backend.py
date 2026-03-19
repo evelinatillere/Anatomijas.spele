@@ -265,11 +265,40 @@ def send_result():
             db.close()
 
 @app.route("/paradit_rez", methods=["GET"])
-def are_u_loged_in():
+def paradit_rez():
     if "user" in session:
-        return jsonify(ok=True, username=session["user"])
+        #return jsonify(ok=True, username=session["user"])
+        try:
+            db = mysql.connector.connect(**DB_CONFIG)
+            cursor = db.cursor()
+
+            cursor.execute(
+                "SELECT rezultats FROM rezultati WHERE lietotajvards = %s",
+                (session["user"],)
+            )
+            result = cursor.fetchall()
+
+            if not result:
+                return jsonify({"error": "User not found"}), 404
+            else:
+                return jsonify({
+                    "ok": True,
+                    "username": session["user"],
+                    "rezultati": result
+                })
+
+        except mysql.connector.Error as e:
+            return jsonify({"error": str(e)}), 500
+
+        finally:
+            if cursor:
+                cursor.close()
+            if db:
+                db.close()
+
     else:
         return jsonify(ok=False, error="Not logged in"), 401
+    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
