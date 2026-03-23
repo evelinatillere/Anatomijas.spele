@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------------- GAME ----------------
   const startBtn = document.getElementById('start-btn');
   const studyBtn = document.getElementById('study-btn');
-  const endqstudyBtn = document.getElementById('end-study-btn');
+  const endstudyBtn = document.getElementById('end-study-btn');
   const exitBtn = document.getElementById('exit-btn');
   const boneNameDiv = document.getElementById('bone-name');
   const gameContainer = document.getElementById('game-container');
