@@ -1,41 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ---------------- BASIC FUNCTIONS ----------------
-  function myFunction1() { 
-    const el = document.getElementById("one");
-    if (el) el.innerHTML = "Hello JavaScript!";
-  }
-
-  function myFunction2() {
-    const el = document.getElementById("two");
-    if (el) {
-      el.style.fontSize = "25px";
-      el.style.color = "red";
-      el.style.backgroundColor = "yellow";
-    }
-  }
-
-  function myFunction3() {
-    ["three", "three_1", "three_2"].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = "Changed.";
-    });
-  }
-
-  // ---------------- FORM 1 ----------------
-  const form1 = document.getElementById("frm1");
-  if (form1) {
-    form1.onsubmit = (e) => {
-      e.preventDefault();
-      let text = "";
-      for (let i = 0; i < form1.length; i++) {
-        text += form1.elements[i].value + "<br>";
-      }
-      const demo = document.getElementById("demo");
-      if (demo) demo.innerHTML = text;
-    };
-  }
-
   // ---------------- REGISTER ----------------
   const registerForm = document.getElementById("registresanas");
   if (registerForm) {
