@@ -1,83 +1,13 @@
 <html>
+<!DOCTYPE html>
+<html>
 <head>
-<title>Page Title</title>
+<title>Anatomijas spēle</title>
 </head>
-<body>
-
-<button type="button" onclick = "window.alert(a)"> is this true?</button>
-<button onclick="setTrue()">Click this to turn true</button>
-<button onclick="setFalse()">Click this to turn false</button>
 
 
-<script src="static/majaslapa_1.js" defer></script>
-
-<form id="registresanas">
-    <p>Reģistrēšanās<p/>
-    <input id="vards" placeholder="Vārds">
-    <input id="lietotajvards" placeholder="Lietotājvārds">
-    <input id="parole" type="password" placeholder="Parole">
-    <input id="e_pasts" placeholder="E-pasts">
-    <button type="submit">Register</button>
-</form>
-
-<form id="log_in">
-    <p>Log in<p/>
-    <input id="lietotajvards_log" placeholder="Lietotājvārds">
-    <input id="parole_log" type="password" placeholder="Parole">
-    <button type="submit">Log in</button>
-</form>
-  <button id="logoutBtn">Log out</button>
-
-  
-<form id="change_password">
-    <p>Mainīt paroli<p/>
-    <input id="parole_old" placeholder="Vecā parole">
-    <input id="parole_new" type="password" placeholder="Jaunā parole">
-    <button type="submit">Mainīt</button>
-</form>
-
-<form id="rezultats_form">
-    <p>Kāds ir tavs rezultāts<p/>
-    <input id="rezultats" placeholder="Tavs rezultāts">
-    <button type="submit">Submit</button>
-</form>
-
-<button id="paradit_rez">Parādīt manus rezultātus</button>
-<p id="paradit_button"></p>
-
-<style>
-.container {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-}
-
-.container img {
-  width: 100%;
-  height: auto;
-}
-
-.container .btn {
-  position: absolute;
-  top: 15%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  background-color: #f1f1f1;
-  color: black;
-  font-size: 10px;
-  padding: 1px 1px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.container .btn:hover {
-  background-color: black;
-  color: white;
-}
-
-</style>
+    <a href="/3">Log in/Sign up</a>
+    <script src="static/majaslapa_1.js" defer></script>
 
 <h2>Izvēlies anatomiju:</h2>
 <ul>
@@ -85,28 +15,7 @@
   <li><a href="/4">Muskuļi</a></li>
   <li><a href="/5">Orgāni</a></li>
 </ul>
-<style>
-.container .btn_1 {
-  position: absolute;
-  top: 15%;
-  left: 15%;
-  transform: translate(-50%, -50%);
-  background-color: #f1f1f1;
-  color: black;
-  font-size: 10px;
-  padding: 1px 1px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-}
 
-.container .btn_1:hover {
-  background-color: red;
-  color: white;
-}
+<a href="/6">Apskati savus rezultātus</a>
 
-</style>
-
-</body>
 </html>
