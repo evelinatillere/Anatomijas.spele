@@ -112,34 +112,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ---------------- SEND RESULT ----------------
-  const rezultatsForm = document.getElementById("rezultats_form");
-  if (rezultatsForm) {
-    rezultatsForm.onsubmit = async (e) => {
-      e.preventDefault();
+  //if (rezultatsForm) {
+    //rezultatsForm.onsubmit = async (e) => {
+      //e.preventDefault();
 
-      const rezultats = document.getElementById("rezultats");
+      //const rezultats = document.getElementById("rezultats");
 
-      const response = await fetch("/send_result", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          rezultats: rezultats?.value
-        })
-      });
+      //const response = await fetch("/send_result", {
+        //method: "POST",
+        //headers: { "Content-Type": "application/json" },
+        //body: JSON.stringify({
+          //rezultats: rezultats?.value
+        //})
+      //});
 
-      const result = await response.json();
+      //const result = await response.json();
 
-      if (response.ok) {
-        alert("Rezultāts saglabāts!");
-      } else {
-        alert(result.error);
-      }
-    };
-  }
-
+      //if (response.ok) {
+        //alert("Rezultāts saglabāts!");
+      //} else {
+        //alert(result.error);
+      //}
+    //};
+  //}
   // ---------------- SHOW RESULTS ----------------
   const paraditBtn = document.getElementById("paradit_rez");
-
+  
   if (paraditBtn) {
     paraditBtn.addEventListener("click", async () => {
       const response = await fetch("/paradit_rez");
@@ -257,14 +255,32 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 800);
     }
 
-    function showScore() {
+    async function showScore() {
       boneNameDiv.textContent = '';
       scoreDiv.textContent = `Tavs rezultāts: ${score}/${bones.length} (${Math.round(score/bones.length*100)}%)`;
+
+      const procenti = Math.round(score / bones.length * 100);
+      const response = await fetch("/send_result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          rezultats: procenti
+        })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("Rezultāts saglabāts!");
+      } else {
+        alert(result.error);
+      }
+
       startBtn.textContent = "Sākt spēli no sākuma";
       startBtn.style.display = 'inline-block';
       studyBtn.style.display = 'inline-block';
       exitBtn.style.display = 'none';
-    }
+    };
 
     // STUDY MODE
     function startStudy() {
