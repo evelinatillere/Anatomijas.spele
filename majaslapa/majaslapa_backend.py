@@ -1,304 +1,106 @@
-# from flask import Flask, request, jsonify
-# from flask import render_template
-# import mysql.connector
-# import psycopg2
+ #import json
+#from flask import Flask, request, jsonify # type: ignore
 
-# app = Flask(__name__)
+#print("Hello World!")
 
-# @app.route("/data", methods=["POST"])
-# def receive_text():
-#     data = request.get_json()
-#     if not data:
-#         return jsonify({"error": "No JSON received"}), 400
+## some JSON:
+#x = '{ "name":"John", "age":30, "city":"New York"}'
 
-#     # 1. Connect to database
-#     db = mysql.connector.connect(
-#         host="localhost",
-#         user="root",
-#         password="Gramatalaba01020304.",
-#         database="majaslapa_1"
-#     )
-#     cursor = db.cursor()
+## parse x:
+#y = json.loads(x)
+#print(y["age"])
 
-#     # 2. Prepare SQL
-#     sql = """
-#         INSERT INTO lietotaji (vards, lietotajvards, parole, e_pasts)
-#         VALUES (%s, %s, %s, %s)
-#     """
+#app = Flask(__name__)
 
-#     # 3. Extract values from JSON
-#     values = (
-#         data["vards"],
-#         data["lietotajvards"],
-#         data["parole"],  # hash password
-#         data["e_pasts"]
-#     )
+#text = {}
 
-#     # 4. Execute & commit
-#     cursor.execute(sql, values)
-#     db.commit()
+#@app.route("/data", methods=["POST"])
+#def receive_text():
+    #text = request.get_json()
+    #print(text)  # JSON as Python dict
+    #return jsonify({"status": "ok", "received": text})
 
-#     cursor.close()
-#     db.close()
+#if __name__ == "__main__":
+    ## Test the route without running a real server
+    #with app.test_client() as client:
+        #data = {"vards": "Maija", "lietotajvards": "Maija_kruze", "parole": "vesma01234.", "e_pasts": "Maija_Kruze@gmail.com"}
+        #response = client.post("/data", json=data)
+        #print(response.json)  # prints: {'status': 'ok', 'received': {...}}
 
-#     return jsonify({"status": "ok", "inserted": data}), 201
+#import mysql.connector
 
-# @app.route("/", methods=["GET"])
-# def receive():
-#     return render_template("majaslapa_1.html")
+#majaslapa_1 = mysql.connector.connect(
+  #host="localhost",
+  #user="root",
+  #password="Gramatalaba01020304.",
+  #database="majaslapa_1"
+#)
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+#mycursor = majaslapa_1.cursor()
 
-from flask import Flask, request, jsonify, render_template
-from werkzeug.security import generate_password_hash
+#sql = "INSERT INTO lietotaji (vards, lietotajvards, parole, e_pasts) VALUES (%s, %s, %s, %s)"
+#val = ('liva', 'liva_bosa', 'majina123.', 'liva_bosa@inbox.lv')
+#sql = "INSERT INTO lietotaji (vards, lietotajvards, parole, e_pasts) VALUES (%s, %s, %s, %s)"
+#val = (
+    #data["vards"],
+    #data["lietotajvards"],
+    #data["parole"],
+    #data["e_pasts"]
+#)
+
+#mycursor.execute(sql, val)
+
+#majaslapa_1.commit()
+
+#print(mycursor.rowcount, "record inserted.")
+
+from flask import Flask, request, jsonify
+from flask import render_template
 import mysql.connector
-import os
-from werkzeug.security import check_password_hash
-from flask import session
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 
-app.secret_key = "your_secret_key"
+@app.route("/data", methods=["POST"])
+def receive_text():
+    data = request.get_json()
 
-esi_loged_in = False
+    # 1. Connect to database
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Gramatalaba01020304.",
+        database="majaslapa_1"
+    )
+    cursor = db.cursor()
 
-# ---- DATABASE CONFIG ----
-DB_CONFIG = {
-    "host": "localhost",
-    "port": 3306,
-    "user": "root",
-    "password": "Gramatalaba01020304.",
-    "database": "majaslapa_1"
-}
+    # 2. Prepare SQL
+    sql = """
+        INSERT INTO lietotaji (vards, lietotajvards, parole, e_pasts)
+        VALUES (%s, %s, %s, %s)
+    """
 
-# ---- ROUTES ----
+    # 3. Extract values from JSON
+    values = (
+        data["vards"],
+        data["lietotajvards"],
+        data["parole"],  # hash password
+        data["e_pasts"]
+    )
+
+    # 4. Execute & commit
+    cursor.execute(sql, values)
+    db.commit()
+
+    cursor.close()
+    db.close()
+
+    return jsonify({"status": "ok", "inserted": data}), 201
 
 @app.route("/", methods=["GET"])
-def home():
+def receive():
     return render_template("majaslapa_1.html")
-@app.route( "/register", methods=["POST"])
-def register():
-
-    data = request.get_json()
-    
-    if not data:
-        return jsonify({"error": "Invalid JSON"}), 400
-
-    required = ["vards", "lietotajvards", "parole", "e_pasts"]
-    if not all(field in data for field in required):
-        return jsonify({"error": "Missing fields"}), 400
-    
-    db = None
-    cursor = None
-
-    try:
-        db = mysql.connector.connect(**DB_CONFIG)
-        cursor = db.cursor()
-
-        sql = """
-            INSERT INTO lietotaji (vards, lietotajvards, parole, e_pasts)
-            VALUES (%s, %s, %s, %s)
-        """
-
-        values = (
-            data["vards"],
-            data["lietotajvards"],
-            generate_password_hash(data["parole"]),
-            data["e_pasts"]
-        )
-
-        cursor.execute(sql, values)
-        db.commit()
-
-    except mysql.connector.Error as e:
-        return jsonify({"error": str(e)}), 500
-    
-    except mysql.connector.IntegrityError:
-        return jsonify({"error": "User already exists"}), 409
-
-    finally:
-        if cursor:
-            cursor.close()
-        if db:
-            db.close()
-
-    return jsonify({"status": "ok"}), 201
-
-@app.route("/log_in", methods=["POST"])
-def log_in():
-    data_log = request.get_json()
-    if not data_log:
-        return jsonify({"error": "Invalid JSON"}), 400
-
-    required = ["lietotajvards", "parole"]
-    if not all(field in data_log for field in required):
-        return jsonify({"error": "Missing fields"}), 400
-
-    db = None
-    cursor = None
-
-    try:
-        db = mysql.connector.connect(**DB_CONFIG)
-        cursor = db.cursor()
-        cursor.execute(
-            "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
-            (data_log["lietotajvards"],)
-        )
-        myresult = cursor.fetchone()
-
-        if not myresult or not check_password_hash(myresult[0], data_log["parole"]):
-            return jsonify({"error": "Invalid credentials"}), 401
-
-        # Login successful → save in session
-        session["user"] = data_log["lietotajvards"]
-        return jsonify(ok=True)
-
-    except mysql.connector.Error as e:
-        return jsonify({"error": str(e)}), 500
-
-    finally:
-        if cursor:
-            cursor.close()
-        if db:
-            db.close()
-
-@app.route("/log_out", methods=["POST"])
-def log_out():
-    session.pop("user", None) 
-    return jsonify(ok=True)    
-
-@app.route("/are_u_loged_in", methods=["GET"])
-def are_u_loged_in():
-    if "user" in session:
-        return jsonify(ok=True, username=session["user"])
-    else:
-        return jsonify(ok=False, error="Not logged in"), 401
-    
-@app.route("/change_password", methods=["POST"])
-def change_password():
-    if "user" not in session:
-        return jsonify({"error": "Not logged in"}), 401
-
-    data = request.get_json()
-
-    if not data:
-        return jsonify({"error": "Invalid JSON"}), 400
-
-    old_password = data.get("old_password")
-    new_password = data.get("new_password")
-
-    if not old_password or not new_password:
-        return jsonify({"error": "Missing fields"}), 400
-
-    db = None
-    cursor = None
-
-    try:
-        db = mysql.connector.connect(**DB_CONFIG)
-        cursor = db.cursor()
-
-        cursor.execute(
-            "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
-            (session["user"],)
-        )
-        result = cursor.fetchone()
-
-        if not result:
-            return jsonify({"error": "User not found"}), 404
-
-        # 2. Check old password
-        if not check_password_hash(result[0], old_password):
-            return jsonify({"error": "Wrong old password"}), 401
-
-        # 3. Update password
-        new_hash = generate_password_hash(new_password)
-
-        cursor.execute(
-            "UPDATE lietotaji SET parole = %s WHERE lietotajvards = %s",
-            (new_hash, session["user"])
-        )
-        db.commit()
-
-        return jsonify({"ok": True})
-
-    except mysql.connector.Error as e:
-        return jsonify({"error": str(e)}), 500
-
-    finally:
-        if cursor:
-            cursor.close()
-        if db:
-            db.close()
-
-@app.route("/send_result", methods=["POST"])
-def send_result():
-    if "user" not in session:
-        return jsonify({"error": "Not logged in"}), 401
-
-    data = request.get_json()
-
-    if not data or "rezultats" not in data:
-        return jsonify({"error": "Missing result"}), 400
-
-    try:
-        db = mysql.connector.connect(**DB_CONFIG)
-        cursor = db.cursor()
-
-        sql = """
-            INSERT INTO rezultati (lietotajvards, rezultats)
-            VALUES (%s, %s)
-        """
-
-        cursor.execute(sql, (session["user"], data["rezultats"]))
-        db.commit()
-
-        return jsonify({"ok": True})
-
-    except mysql.connector.Error as e:
-        return jsonify({"error": str(e)}), 500
-
-    finally:
-        if cursor:
-            cursor.close()
-        if db:
-            db.close()
-
-@app.route("/paradit_rez", methods=["GET"])
-def paradit_rez():
-    if "user" in session:
-        #return jsonify(ok=True, username=session["user"])
-        try:
-            db = mysql.connector.connect(**DB_CONFIG)
-            cursor = db.cursor()
-
-            cursor.execute(
-                "SELECT rezultats FROM rezultati WHERE lietotajvards = %s",
-                (session["user"],)
-            )
-            result = cursor.fetchall()
-
-            if not result:
-                return jsonify({"error": "User not found"}), 404
-            else:
-                return jsonify({
-                    "ok": True,
-                    "username": session["user"],
-                    "rezultati": result
-                })
-
-        except mysql.connector.Error as e:
-            return jsonify({"error": str(e)}), 500
-
-        finally:
-            if cursor:
-                cursor.close()
-            if db:
-                db.close()
-
-    else:
-        return jsonify(ok=False, error="Not logged in"), 401
-    
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)
+    
