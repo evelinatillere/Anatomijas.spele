@@ -24,7 +24,27 @@ DB_CONFIG = {
 
 @app.route("/", methods=["GET"])
 def home():
-    return render_template("majaslapa_1.html")
+    return render_template("majaslapa_1.html",)
+@app.route("/1", methods=["GET"])
+def home1():
+    return render_template("index.html")
+@app.route("/2", methods=["GET"])
+def home2():
+    return render_template("kauli.html")
+@app.route("/3", methods=["GET"])
+def home3():
+    return render_template("login.html")
+@app.route("/4", methods=["GET"])
+def home4():
+    return render_template("muskuli.html")
+@app.route("/5", methods=["GET"])
+def home5():
+    return render_template("organi.html")
+@app.route("/6", methods=["GET"])
+def home6():
+    return render_template("rezultati.html")
+
+
 @app.route( "/register", methods=["POST"])
 def register():
 
