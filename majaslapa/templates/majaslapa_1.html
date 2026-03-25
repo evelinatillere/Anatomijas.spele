@@ -1,21 +1,113 @@
 <html>
 <!DOCTYPE html>
-<html>
-<head>
-<title>Anatomijas spēle</title>
-</head>
+
+<style>
+   * {
+  padding: 0;
+  margin: 0;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  background: #E8BFAF;
+  font-family: Hack, monospace;
+}
+
+.menuItems {
+  list-style: none;
+  display: flex;
+}
+
+.menuItems li {
+  margin: 25px;
+}
+
+.menuItems li a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: #333333;
+  font-size: 30px;
+}
+
+.menuItems li a::before {
+  content: attr(data-item);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+  color: #6D1F2F;
+  transition: 0.5s;
+}
+
+.menuItems li a:hover::before {
+  width: 100%;
+}
+body{
+  background: #F2D6C9;
+}
+
+/* TEXT */
+p {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 40px;
+  color: #333333;
+  font-family: Hack, monospace;
+}
+
+/* IMAGE ROW */
+.anat {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+  /* controls size */
+
+.anat img {
+  width: 100%;
+  max-width: 400px;  /* hard limit */
+  height: auto;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+  .anat img:hover {
+  transform: scale(1.05);
+}
+  
+</style>
+
+  
+  <nav>
+    <ul class="menuItems">
+      <li><a href='logIn.html' data-item='Reģistrēties'>Reģistrēties</a></li>
+      <li><a href='#' data-item='Rezultāti'>Rezultāti</a></li>
+      
+    </ul>
+  </nav>
 
 
-    <a href="/3">Log in/Sign up</a>
-    <script src="static/majaslapa_1.js" defer></script>
 
-<h2>Izvēlies anatomiju:</h2>
-<ul>
-  <li><a href="/2">Kauli</a></li>
-  <li><a href="/4">Muskuļi</a></li>
-  <li><a href="/5">Orgāni</a></li>
-</ul>
+<body>
+   <p>Izvēlies anatomijas daļu:</p>
+    <div class="anat">
+      
+      <a href='#' ><img src="plswork.png" alt="Muskuļi"></a>
+      <a href='kauli.html' ><img src="skeleton-removebg-preview.png" alt="Kauli"></a>
+      <a href='#' ><img src="plswork.png" alt="Orgāni"></a>
+    </div>
+</body>
 
-<a href="/6">Apskati savus rezultātus</a>
+
 
 </html>
