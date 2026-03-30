@@ -205,23 +205,67 @@ def send_result():
         return jsonify({"error": "Not logged in"}), 401
 
     data = request.get_json()
-
-    if not data or "rezultats" not in data:
-        return jsonify({"error": "Missing result"}), 400
+    if not data or "rezultats" not in data or "spele" not in data:
+        return jsonify({"error": "Missing data"}), 400
 
     try:
         db = mysql.connector.connect(**DB_CONFIG)
         cursor = db.cursor()
 
-        sql = """
-            INSERT INTO rezultati (lietotajvards, rezultats)
-            VALUES (%s, %s)
-        """
+        # count attempts FIRST
+        cursor.execute(
+            "SELECT COUNT(*) FROM rezultati WHERE lietotajvards=%s AND spele=%s",
+            (session["user"], data["spele"])
+        )
+        attempts = cursor.fetchone()[0] + 1
 
-        cursor.execute(sql, (session["user"], data["rezultats"]))
+        # insert full record
+        cursor.execute("""
+            INSERT INTO rezultati (lietotajvards, rezultats, spele, meginajumi)
+            VALUES (%s, %s, %s, %s)
+        """, (
+            session["user"],
+            data["rezultats"],
+            data["spele"],
+            attempts
+        ))
+
         db.commit()
-
         return jsonify({"ok": True})
+
+    except mysql.connector.Error as e:
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        if cursor: cursor.close()
+        if db: db.close()
+
+@app.route("/paradit_rez", methods=["GET"])
+def paradit_rez():
+    if "user" not in session:
+        return jsonify(ok=False, error="Not logged in"), 401
+
+    try:
+        db = mysql.connector.connect(**DB_CONFIG)
+        cursor = db.cursor()
+
+        cursor.execute(
+            """
+            SELECT rezultats, spele, meginajumi
+            FROM rezultati
+            WHERE lietotajvards = %s
+            ORDER BY meginajumi DESC
+            """,
+            (session["user"],)
+        )
+
+        rows = cursor.fetchall()
+
+        return jsonify({
+            "ok": True,
+            "username": session["user"],
+            "rezultati": rows
+        })
 
     except mysql.connector.Error as e:
         return jsonify({"error": str(e)}), 500
@@ -231,42 +275,6 @@ def send_result():
             cursor.close()
         if db:
             db.close()
-
-@app.route("/paradit_rez", methods=["GET"])
-def paradit_rez():
-    if "user" in session:
-        #return jsonify(ok=True, username=session["user"])
-        try:
-            db = mysql.connector.connect(**DB_CONFIG)
-            cursor = db.cursor()
-
-            cursor.execute(
-                "SELECT rezultats FROM rezultati WHERE lietotajvards = %s",
-                (session["user"],)
-            )
-            result = cursor.fetchall()
-
-            if not result:
-                return jsonify({"error": "User not found"}), 404
-            else:
-                return jsonify({
-                    "ok": True,
-                    "username": session["user"],
-                    "rezultati": result
-                })
-
-        except mysql.connector.Error as e:
-            return jsonify({"error": str(e)}), 500
-
-        finally:
-            if cursor:
-                cursor.close()
-            if db:
-                db.close()
-
-    else:
-        return jsonify(ok=False, error="Not logged in"), 401
-    
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

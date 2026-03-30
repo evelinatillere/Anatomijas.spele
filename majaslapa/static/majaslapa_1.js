@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const response = await fetch("/log_in", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           lietotajvards: lietotajvards_log?.value,
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
-      const response = await fetch("/log_out", { method: "POST" });
+      const response = await fetch("/log_out", { method: "POST", credentials: "include" });
       const result = await response.json();
 
       if (result.ok) {
@@ -140,19 +141,25 @@ document.addEventListener("DOMContentLoaded", () => {
   
   if (paraditBtn) {
     paraditBtn.addEventListener("click", async () => {
-      const response = await fetch("/paradit_rez");
-
-      if (!response.ok) {
-        alert("Jūs neesat pieslēdzies");
-        return;
-      }
+      const response = await fetch("/paradit_rez",{method: "GET",
+      credentials: "include"});
 
       const result = await response.json();
+
+      if (!result.ok) {
+        alert(result.error);
+      }
 
       if (result.ok) {
         let text = "";
         result.rezultati.forEach(r => {
-          text += r[0] + "% <br>";
+          text += `
+            <div>
+              Spēle: ${r[1]} <br>
+              Mēģinājums: ${r[2]} <br>
+              Rezultāts: ${r[0]}%
+            </div><br>
+          `;
         });
 
         const output = document.getElementById("paradit_button");
@@ -264,9 +271,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const procenti = Math.round(score / bones.length * 100);
       const response = await fetch("/send_result", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          rezultats: procenti
+          rezultats: procenti,
+          spele: "Kauli",
         })
       });
 
