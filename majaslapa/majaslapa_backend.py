@@ -131,6 +131,13 @@ def log_in():
         if db:
             db.close()
 
+@app.route("/check_login", methods=["GET"])
+def check_login():
+    if "user" in session:
+        return jsonify({"loggedIn": True})
+    else:
+        return jsonify({"loggedIn": False})
+
 @app.route("/log_out", methods=["POST"])
 def log_out():
     session.pop("user", None) 
