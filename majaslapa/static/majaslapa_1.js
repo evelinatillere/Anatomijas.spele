@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(lietotajvards_log.value + " login successful!");
         lietotajvards_log.value = "";
         parole_log.value = "";
+        location.reload();
       } else {
         alert(result.error);
       }
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (result.ok) {
         alert("Logged out successfully!");
+        location.reload();
       } else {
         alert("Logout failed");
       }
