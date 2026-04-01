@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
       startBtn.style.display = 'none';
       studyBtn.style.display = 'none';
       exitBtn.style.display = 'inline-block';
-
+      scoreDiv.style.display = "none";//newwwwwwwww
       showBone();
     }
       
@@ -269,7 +269,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function showScore() {
       boneNameDiv.textContent = '';
       scoreDiv.textContent = `Tavs rezultāts: ${score}/${bones.length} (${Math.round(score/bones.length*100)}%)`;
-
+      scoreDiv.style.display = "block";//newwwwwwwwwwwwwwwww
+      scoreDiv.classList.add("show");//newwwwwwwwwwwwwwwwww
       const procenti = Math.round(score / bones.length * 100);
       const response = await fetch("/send_result", {
         method: "POST",
@@ -304,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
       studyBtn.style.display = 'none';
       endStudyBtn.style.display = 'inline-block';
       exitBtn.style.display = 'none';
-
+      scoreDiv.style.display = "none";//newwwwwwwwwwwwww
       gameContainer.querySelectorAll('.dot').forEach(d => d.remove());
 
       bones.forEach((bone) => {
@@ -344,6 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
       studyBtn.style.display = 'inline-block';
       endStudyBtn.style.display = 'none';
       exitBtn.style.display = 'none';
+      scoreDiv.style.display = "none";//newwwwwwwwwwwwwwwwwwww
     }
 
     // EVENTS
