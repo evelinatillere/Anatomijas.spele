@@ -352,3 +352,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+///hides stuff at login page
+document.addEventListener("DOMContentLoaded", async () => {
+    const response = await fetch("/check_login"); 
+    const result = await response.json();
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  const changeForm = document.getElementById("change_password");
+  const loginForm = document.getElementById("log_in");
+
+  if (result.ok) {
+    // ✅ Logged in
+    if (logoutBtn) logoutBtn.style.display = "block";
+    if (changeForm) changeForm.style.display = "block";
+    if (loginForm) loginForm.style.display = "none";
+  } else {
+    // ❌ Not logged in
+    if (logoutBtn) logoutBtn.style.display = "none";
+    if (changeForm) changeForm.style.display = "none";
+    if (loginForm) loginForm.style.display = "block";
+  }
+});
