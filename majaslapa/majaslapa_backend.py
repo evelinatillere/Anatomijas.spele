@@ -110,7 +110,7 @@ def log_in():
         db = mysql.connector.connect(**DB_CONFIG)
         cursor = db.cursor()
         cursor.execute(
-            "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
+            "SELECT parole FROM lietotaji WHERE lietotajvards = %s LIMIT 1",
             (data_log["lietotajvards"],)
         )
         myresult = cursor.fetchone()
@@ -174,7 +174,7 @@ def change_password():
         cursor = db.cursor()
 
         cursor.execute(
-            "SELECT parole FROM lietotaji WHERE lietotajvards = %s",
+            "SELECT parole FROM lietotaji WHERE lietotajvards = %s LIMIT 1",
             (session["user"],)
         )
         result = cursor.fetchone()
@@ -221,7 +221,7 @@ def send_result():
 
         # count attempts FIRST
         cursor.execute(
-            "SELECT COUNT(*) FROM rezultati WHERE lietotajvards=%s AND spele=%s",
+            "SELECT COUNT(*) FROM rezultati WHERE lietotajvards=%s LIMIT 1 AND spele=%s LIMIT 1",
             (session["user"], data["spele"])
         )
         attempts = cursor.fetchone()[0] + 1
