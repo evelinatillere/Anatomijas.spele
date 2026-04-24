@@ -72,7 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
-      const response = await fetch("/log_out", { method: "POST", credentials: "include" });
+      const response = await fetch("/log_out", 
+        { method: "POST", credentials: "include" });
       const result = await response.json();
 
       if (result.ok) {
@@ -80,9 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         location.reload();
       } else {
         alert("Logout failed");
-      }
-    });
-  }
+      }});}
 
   // ---------------- CHANGE PASSWORD ----------------
   const changeForm = document.getElementById("change_password");
