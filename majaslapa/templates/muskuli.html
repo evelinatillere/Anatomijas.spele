@@ -5,12 +5,67 @@
     <title>Muskuļi</title>
 </head>
 <body>
+
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    #muscles-name {
+      font-size: 24px;
+      margin-bottom: 20px;
+      min-height: 30px;
+    }
+    #muscles-game-container {
+      position: relative;
+      display: inline-block;
+    }
+    #muscles-img {
+      width: 600px;
+    }
+    .muscles-dot {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #888;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .muscles-dot.correct {
+      background-color: #4caf50;
+    }
+    .muscles-dot.wrong {
+      background-color: #f44336;
+    }
+    #muscles-score {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+  </style>
    <script src="static/majaslapa_1.js" defer></script>
     <a href="/">Atgriezties</a> 
+    <h1>Muskuļi</h1>
 
-    <h1>log in</h1>
-    
+  <button id="muscles-start-btn">Sākt spēli</button>
+  <button id="muscles-study-btn">Mācīties terminus</button>
+  <button id="muscles-end-study-btn" style="display:none;">Beigt mācīšanos</button>
+  <button id="muscles-exit-btn" style="display:none;">Beigt spēli</button>
 
+  <div id="muscles-name"></div>
+  <div id="muscles-game-container">
+    <img id="muscles-img"
+      src="https://img.sanishtech.com/u/dd6c32e10194b205014ad960f43986ce.png"
+      alt="Muscle diagram">
+  </div>
+  <div id="muscles-score"></div>
 
 </body>
 </html>

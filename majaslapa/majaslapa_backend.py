@@ -221,7 +221,7 @@ def send_result():
 
         # count attempts FIRST
         cursor.execute(
-            "SELECT COUNT(*) FROM rezultati WHERE lietotajvards=%s LIMIT 1 AND spele=%s LIMIT 1",
+            "SELECT COUNT(*) FROM rezultati WHERE lietotajvards=%s AND spele=%s",
             (session["user"], data["spele"])
         )
         attempts = cursor.fetchone()[0] + 1
@@ -261,7 +261,7 @@ def paradit_rez():
             SELECT rezultats, spele, meginajumi
             FROM rezultati
             WHERE lietotajvards = %s
-            ORDER BY meginajumi DESC
+            ORDER BY id DESC
             """,
             (session["user"],)
         )
