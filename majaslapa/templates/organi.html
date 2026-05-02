@@ -5,7 +5,76 @@
     <title>Orgāni</title>
 </head>
 <body>
+<style>
+  body 
+  {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 10px;
+  }
+
+  #organ-name {
+    font-size: 20px;
+    margin-bottom: 15px;
+    min-height: 30px;
+  }
+
+  #game-container-organs {
+    position: relative;
+    display: inline-block;
+  }
+
+  #organs-image {
+    width: 400px;
+    max-width: 100%;
+  }
+
+  .dot-organs {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #888;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .dot-organs.correct {
+    background-color: #4caf50;
+  }
+
+  .dot-organs.wrong {
+    background-color: #f44336;
+  }
+
+  #score-organs {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  button {
+    padding: 6px 14px;
+    margin: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+</style>
    <script src="static/majaslapa_1.js" defer></script>
     <a href="/">Atgriezties</a> 
+    <button id="start-btn-organs">Sākt spēli</button>
+<button id="study-btn-organs">Mācīties terminus</button>
+<button id="end-study-btn-organs" style="display:none;">Beigt mācīšanos</button>
+<button id="exit-btn-organs" style="display:none;">Beigt spēli</button>
+
+<div id="organ-name"></div>
+
+<div id="game-container-organs">
+  <img id="organs-image"
+       src="https://img.sanishtech.com/u/9af00e7aeefd167f878e922b1b70e193.png"
+       alt="Orgāni">
+</div>
+
+<div id="score-organs"></div>
 </body>
 </html>
