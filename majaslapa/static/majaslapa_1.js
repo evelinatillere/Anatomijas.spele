@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ---------------- SHOW RESULTS ----------------
-  const paraditBtn = document.getElementById("paradit_rez");
+   const paraditBtn = document.getElementById("paradit_rez");
   
   if (paraditBtn) {
     paraditBtn.addEventListener("click", async () => {
@@ -126,21 +126,26 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!result.ok) {
         alert(result.error);
       }
-
+ 
+      
       if (result.ok) {
-        let text = "";
-        result.rezultati.forEach(r => {
-          text += `
-            <div>
-              Spēle: ${r[1]} <br>
-              Mēģinājums: ${r[2]} <br>
-              Rezultāts: ${r[0]}%
-            </div><br>
-          `;
-        });
+       const tbody = document.querySelector("#results-table tbody");
 
-        const output = document.getElementById("paradit_button");
-        if (output) output.innerHTML = text;
+       tbody.innerHTML = "";
+
+       result.rezultati.forEach(r => {
+       const row = document.createElement("tr");
+
+        row.innerHTML = `
+        <td>${r[1]}</td>
+        <td>${r[2]}</td>
+        <td>${r[0]}%</td>
+         `;
+
+         tbody.appendChild(row);
+       } );
+
+         document.getElementById("results-table").style.display = "table";
       }
     });
   }
@@ -390,8 +395,10 @@ const musclesList = [
       musclesList.forEach((m, index) => {
         const dot = document.createElement('div');
         dot.classList.add('muscles-dot');
-        dot.style.left = m.x + 'px';
-        dot.style.top  = m.y + 'px';
+        const BASE_WIDTH = 600;
+        const BASE_HEIGHT = 791 * (600 / 559);
+        dot.style.left = (m.x / BASE_WIDTH * 100) + '%';
+        dot.style.top  = (m.y / BASE_HEIGHT * 100) + '%';
         dot.addEventListener('click', () => checkMuscleAnswer(dot, index));
         musclesGameContainer.appendChild(dot);
       });
@@ -419,6 +426,8 @@ const musclesList = [
 
     async function showMusclesScore() {
       musclesNameDiv.textContent = '';
+      musclesScoreDiv.style.display = "block";
+      musclesScoreDiv.classList.add("show");
       musclesScoreDiv.textContent =
         `Tavs rezultāts: ${scoreMuscles}/${musclesList.length} (${Math.round(scoreMuscles / musclesList.length * 100)}%)`;
       const procenti_1 = Math.round(scoreMuscles / musclesList.length * 100);
@@ -441,10 +450,10 @@ const musclesList = [
       } catch (err) {
         console.error("Failed to send result:", err);
       }
-      musclesStartBtn.textContent     = 'Sākt spēli no sākuma';
-      musclesStartBtn.style.display   = 'inline-block';
-      musclesStudyBtn.style.display   = 'inline-block';
-      musclesExitBtn.style.display    = 'none';
+      
+      musclesStartBtn.style.display   = 'none';
+      musclesStudyBtn.style.display   = 'none';
+      musclesExitBtn.style.display    = 'inline-block';
       musclesGameContainer.querySelectorAll('.muscles-dot').forEach(d => d.remove());
     }
 
@@ -461,8 +470,8 @@ const musclesList = [
       musclesList.forEach((m) => {
         const dot = document.createElement('div');
         dot.classList.add('muscles-dot');
-        dot.style.left = m.x + 'px';
-        dot.style.top  = m.y + 'px';
+        dot.style.left = (m.x / BASE_WIDTH * 100) + '%';
+        dot.style.top  = (m.y / BASE_HEIGHT * 100) + '%';
         dot.addEventListener('click', () => {
           musclesNameDiv.textContent = `${m.name} — ${m.latin}`;
         });
@@ -488,6 +497,8 @@ const musclesList = [
       musclesStudyBtn.style.display    = 'inline-block';
       musclesEndStudyBtn.style.display = 'none';
       musclesExitBtn.style.display     = 'none';
+      musclesScoreDiv.classList.remove("show");
+      musclesScoreDiv.textContent = '';
     }
 
     musclesStartBtn.addEventListener('click', startMusclesGame);
@@ -600,7 +611,8 @@ function checkAnswerOrgans(dot, index) {
 
 async function showScoreOrgans() {
   organNameDivOrgans.textContent = '';
-
+  scoreDivOrgans.style.display = "block";
+  scoreDivOrgans.classList.add("show");
   scoreDivOrgans.textContent =
     `Tavs rezultāts: ${scoreOrgans}/${organsData.length} (${Math.round(scoreOrgans / organsData.length * 100)}%)`;
       const procenti_2 = Math.round(scoreOrgans / organsData.length * 100);
@@ -625,9 +637,9 @@ async function showScoreOrgans() {
       }
   startBtnOrgans.textContent = "Sākt spēli no sākuma";
 
-  startBtnOrgans.style.display = 'inline-block';
-  studyBtnOrgans.style.display = 'inline-block';
-  exitBtnOrgans.style.display = 'none';
+  startBtnOrgans.style.display = 'none';
+  studyBtnOrgans.style.display = 'none';
+  exitBtnOrgans.style.display = 'inline-block';
 }
 
 // STUDY MODE
@@ -674,7 +686,9 @@ function exitGameOrgans() {
 function resetToMenuOrgans() {
   organNameDivOrgans.textContent = '';
   scoreDivOrgans.textContent = '';
-
+  scoreDivOrgans.textContent = '';
+  scoreDivOrgans.style.display = "none";
+  scoreDivOrgans.classList.remove("show");
   gameContainerOrgans.querySelectorAll('.dot-organs').forEach(dot => dot.remove());
 
   startBtnOrgans.style.display = 'inline-block';

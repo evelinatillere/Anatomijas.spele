@@ -111,6 +111,43 @@ button {
     padding: 0 25px;
   }
 }
+table {
+  border-spacing: 1px;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  max-width: 800px;
+  width: 100%;
+  margin: 20px auto;
+  background: #E8BFAF;;
+  font-family: Hack, monospace;
+}
+
+td, th {
+  padding-left: 8px;
+  text-align: left;
+}
+
+thead tr {
+  height: 60px;
+  background: #6D1F2F;
+  font-size: 30px;
+  color: #F2D6C9;
+}
+
+tbody tr {
+  height: 48px;
+  border-bottom: 1px solid #6D1F2F;
+  font-size: 18px;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+	#results-table {
+  display: none;
+}
 </style>
 <h1>Rezultāti</h1>
 <nav>
@@ -123,7 +160,17 @@ button {
 <body>
  <script src="static/majaslapa_1.js" defer></script>     
 <button id="paradit_rez">Parādīt manus rezultātus</button>
-<p id="paradit_button"></p>
+
+<table id="results-table">
+  <thead>
+    <tr>
+      <th>Spēle</th>
+      <th>Mēģinājums</th>
+      <th>Rezultāts</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
 
 </body>

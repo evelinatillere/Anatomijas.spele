@@ -63,26 +63,30 @@ position: fixed;
 
 
     body {
-      font-family: Arial, sans-serif;
+      padding-top: 80px;
       text-align: center;
       margin: 20px;
     }
     #muscles-name {
       font-size: 24px;
-      margin-bottom: 20px;
-      min-height: 30px;
+      margin-top: 5px;
+      font-family: Hack, monospace;
     }
     #muscles-game-container {
       position: relative;
       display: inline-block;
     }
     #muscles-img {
-      width: 600px;
+      height: 80vh;
+      width: auto;
+      z-index:900; 
     }
     .muscles-dot {
       position: absolute;
-      width: 15px;
-      height: 15px;
+      width: 1.5vh;
+      height: 1.5vh;
+      min-width: 8px;
+      min-height: 8px;
       border-radius: 50%;
       background-color: #888;
       cursor: pointer;
