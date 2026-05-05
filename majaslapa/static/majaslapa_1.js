@@ -528,7 +528,6 @@ const organsData = [
   {name: "Labā niere", latin: "Ren dexter", x: 160, y: 330},
   {name: "Tievā zarna", latin: "Intestinum tenue", x: 193, y: 410},
   {name: "Resnā zarna", latin: "Intestinum crassum", x: 240, y: 418},
-  {name: "Urīnpūslis", latin: "Vesica urinaria", x: 188, y: 450}
 ];
 
 let currentOrganIndexOrgans = 0;
