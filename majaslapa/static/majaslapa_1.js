@@ -470,6 +470,9 @@ const musclesList = [
       musclesList.forEach((m) => {
         const dot = document.createElement('div');
         dot.classList.add('muscles-dot');
+        const BASE_WIDTH = 600;
+        const BASE_HEIGHT = 791 * (600 / 559);
+
         dot.style.left = (m.x / BASE_WIDTH * 100) + '%';
         dot.style.top  = (m.y / BASE_HEIGHT * 100) + '%';
         dot.addEventListener('click', () => {
